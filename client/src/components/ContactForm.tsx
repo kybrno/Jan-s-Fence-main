@@ -71,7 +71,7 @@ export default function ContactForm() {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          access_key: import.meta.env.VITE_WEB3FORMS_KEY,
+          access_key: "353760ac-de35-4e64-9869-847d7cb829db",
           subject: `New fence inquiry from ${formData.name}`,
           from_name: formData.name,
           ...formData,
