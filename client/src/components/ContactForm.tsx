@@ -70,6 +70,7 @@ export default function ContactForm() {
         }),
       });
       const data = await res.json();
+      console.log("Web3Forms response:", data);
       if (data.success) {
         setSubmitted(true);
         toast.success("Thank you! We'll contact you soon.");
