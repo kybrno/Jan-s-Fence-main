@@ -51,16 +51,8 @@ export default function ContactForm() {
     }
 
     // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
+    if (!formData.email.includes("@")) {
       toast.error("Please enter a valid email address");
-      return;
-    }
-
-    // Phone validation (basic)
-    const phoneRegex = /^[\d\s\-\+\(\)]+$/;
-    if (!phoneRegex.test(formData.phone)) {
-      toast.error("Please enter a valid phone number");
       return;
     }
 
