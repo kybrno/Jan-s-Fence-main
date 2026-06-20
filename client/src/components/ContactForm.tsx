@@ -59,19 +59,13 @@ export default function ContactForm() {
     setIsSubmitting(true);
 
     try {
-      const res = await fetch("https://api.web3forms.com/submit", {
+      const res = await fetch("https://formspree.io/f/mpqevopz", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          access_key: "353760ac-de35-4e64-9869-847d7cb829db",
-          subject: `New fence inquiry from ${formData.name}`,
-          from_name: formData.name,
-          ...formData,
-        }),
+        body: JSON.stringify(formData),
       });
       const data = await res.json();
-      console.log("Web3Forms response:", data);
-      if (data.success) {
+      if (data.ok) {
         setSubmitted(true);
         toast.success("Thank you! We'll contact you soon.");
         setFormData({ name: "", email: "", phone: "", message: "" });
