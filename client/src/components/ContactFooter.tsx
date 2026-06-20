@@ -36,24 +36,31 @@ function ContactFormComponent() {
       toast.error("Please fill in all fields");
       return;
     }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
+    if (!formData.email.includes("@")) {
       toast.error("Please enter a valid email address");
       return;
     }
-    const phoneRegex = /^[\d\s\-\+\(\)]+$/;
-    if (!phoneRegex.test(formData.phone)) {
-      toast.error("Please enter a valid phone number");
-      return;
-    }
     setIsSubmitting(true);
-    setTimeout(() => {
-      setSubmitted(true);
+    try {
+      const res = await fetch("https://formspree.io/f/mpqevopz", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        setSubmitted(true);
+        toast.success("Thank you! We'll contact you soon.");
+        setFormData({ name: "", email: "", phone: "", message: "" });
+        setTimeout(() => setSubmitted(false), 5000);
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
+    } catch {
+      toast.error("Network error. Please try again.");
+    } finally {
       setIsSubmitting(false);
-      toast.success("Thank you! We'll contact you soon.");
-      setFormData({ name: "", email: "", phone: "", message: "" });
-      setTimeout(() => setSubmitted(false), 5000);
-    }, 1000);
+    }
   };
 
   if (submitted) {
