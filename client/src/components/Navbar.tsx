@@ -52,9 +52,9 @@ export default function Navbar() {
             >
               {/* Jan's Fence logo */}
               <img
-                src="/images/jans-fence-logo.png"
+                src="/images/Jansfencelogonew.png"
                 alt="Jan's Fence logo"
-                className="h-[140px] w-auto transition-all duration-300 group-hover:opacity-80"
+                className="h-12 lg:h-16 w-auto transition-all duration-300 group-hover:opacity-80"
               />
             </a>
 
