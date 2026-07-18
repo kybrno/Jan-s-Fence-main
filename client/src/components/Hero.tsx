@@ -4,10 +4,40 @@
  * Stats bar at bottom, scroll indicator, rust CTA button
  */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ArrowDown, Star, CheckCircle2 } from "lucide-react";
 
-const HERO_IMAGE = "https://d2xsxph8kpxj0f.cloudfront.net/310519663460703014/ERQEdWvDsdkA5w4feoHyUC/hero-fence-CgRzoVhukgfTYfSdcFs66f.webp";
+const COVER_IMAGE = "/images/Coverphoto.jpg";
+
+const OTHER_IMAGES = [
+  "/images/IMG_4220.jpg",
+  "/images/IMG_4221.jpg",
+  "/images/Metal1.jpg",
+  "/images/Metal2.jpg",
+  "/images/Metal3.jpg",
+  "/images/Metal4.jpg",
+  "/images/Vinyl1.jpg",
+  "/images/Vinyl2.jpg",
+  "/images/Vinyl3.jpg",
+  "/images/Vinyl5.jpg",
+  "/images/Vinyl6.jpg",
+  "/images/Vinyl7.jpg",
+  "/images/Vinyl8.jpg",
+  "/images/Vinyl9.jpg",
+  "/images/Vinyl10.jpg",
+  "/images/Wood1.jpg",
+  "/images/Wood2.jpg",
+  "/images/Wood3.jpg",
+  "/images/Wood4.jpg",
+  "/images/Wood5.jpg",
+  "/images/Wood6.jpg",
+  "/images/Wood7.jpg",
+  "/images/Wood8.jpg",
+  "/images/Wood9.jpg",
+  "/images/Wood10.jpg",
+  "/images/Wood11.jpg",
+  "/images/Wood12.jpg",
+];
 
 const stats = [
   { value: "30+ yrs", label: "Fencing Experience" },
@@ -18,6 +48,32 @@ const stats = [
 
 export default function Hero() {
   const [visible, setVisible] = useState(false);
+
+  const [images] = useState(() => {
+    const shuffled = [...OTHER_IMAGES].sort(() => Math.random() - 0.5);
+    return [COVER_IMAGE, ...shuffled];
+  });
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [nextIndex, setNextIndex] = useState<number | null>(null);
+  const [fading, setFading] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const next = (currentIndex + 1) % images.length;
+      setNextIndex(next);
+      setFading(true);
+      timerRef.current = setTimeout(() => {
+        setCurrentIndex(next);
+        setNextIndex(null);
+        setFading(false);
+      }, 1000);
+    }, 6000);
+    return () => {
+      clearInterval(interval);
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, [currentIndex, images.length]);
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 100);
@@ -34,13 +90,21 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen flex flex-col" id="hero">
-      {/* Background image */}
-      <div className="absolute inset-0 z-0">
+      {/* Background slideshow */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
         <img
-          src={HERO_IMAGE}
-          alt="Beautiful custom wood fence at golden hour"
-          className="w-full h-full object-cover"
+          src={images[currentIndex]}
+          alt="Jan's Fence installation"
+          className="absolute inset-0 w-full h-full object-cover"
         />
+        {nextIndex !== null && (
+          <img
+            src={images[nextIndex]}
+            alt="Jan's Fence installation"
+            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
+            style={{ opacity: fading ? 1 : 0 }}
+          />
+        )}
         {/* Gradient overlay: darker on left for text legibility */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/50 to-black/20" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
