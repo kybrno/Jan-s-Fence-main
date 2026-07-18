@@ -37,7 +37,7 @@ export default function FloatingActions() {
 
       {/* Contact Us floating button */}
       <button
-        onClick={() => document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" })}
+        onClick={() => document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth" })}
         className={`flex items-center gap-2 px-4 py-3 rounded-full shadow-xl font-body font-semibold text-sm text-white transition-all duration-300 ${
           showBooking ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
         }`}

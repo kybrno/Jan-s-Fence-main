@@ -113,7 +113,7 @@ export default function Process() {
           style={{ transitionDelay: "500ms" }}
         >
           <button
-            onClick={() => document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" })}
+            onClick={() => document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth" })}
             className="btn-forest px-10 py-4 rounded font-semibold font-body text-base"
           >
             Contact Us for Free Estimate

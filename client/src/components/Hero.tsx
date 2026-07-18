@@ -161,7 +161,7 @@ export default function Hero() {
               style={{ transitionDelay: "360ms" }}
             >
               <button
-                onClick={() => document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" })}
+                onClick={() => document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth" })}
                 className="btn-forest px-8 py-4 rounded font-semibold font-body text-base"
               >
                 Contact Us for Free Estimate

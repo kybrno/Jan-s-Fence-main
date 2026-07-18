@@ -12,6 +12,7 @@ interface FormData {
   name: string;
   email: string;
   phone: string;
+  town: string;
   message: string;
 }
 
@@ -20,6 +21,7 @@ function ContactFormComponent() {
     name: "",
     email: "",
     phone: "",
+    town: "",
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
@@ -32,7 +34,7 @@ function ContactFormComponent() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name.trim() || !formData.email.trim() || !formData.phone.trim() || !formData.message.trim()) {
+    if (!formData.name.trim() || !formData.email.trim() || !formData.phone.trim() || !formData.town.trim() || !formData.message.trim()) {
       toast.error("Please fill in all fields");
       return;
     }
@@ -51,7 +53,7 @@ function ContactFormComponent() {
       if (data.ok) {
         setSubmitted(true);
         toast.success("Thank you! We'll contact you soon.");
-        setFormData({ name: "", email: "", phone: "", message: "" });
+        setFormData({ name: "", email: "", phone: "", town: "", message: "" });
         setTimeout(() => setSubmitted(false), 5000);
       } else {
         toast.error("Something went wrong. Please try again.");
@@ -94,11 +96,20 @@ function ContactFormComponent() {
           </div>
         </div>
       </div>
-      <div className="mb-6">
-        <label className="block font-body font-semibold text-stone-900 text-sm mb-2">Phone Number *</label>
-        <div className="relative">
-          <Phone size={16} className="absolute left-3 top-3.5 text-stone-400" />
-          <input type="tel" name="phone" value={formData.phone} onChange={handleChange} placeholder="(617) 953-9487" className="w-full pl-10 pr-4 py-2.5 border border-stone-200 rounded-lg font-body text-sm focus:outline-none focus:ring-2 focus:ring-offset-0 transition-all" style={{ "--tw-ring-color": "var(--color-forest)" } as React.CSSProperties} />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div>
+          <label className="block font-body font-semibold text-stone-900 text-sm mb-2">Phone Number *</label>
+          <div className="relative">
+            <Phone size={16} className="absolute left-3 top-3.5 text-stone-400" />
+            <input type="tel" name="phone" value={formData.phone} onChange={handleChange} placeholder="(617) 953-9487" className="w-full pl-10 pr-4 py-2.5 border border-stone-200 rounded-lg font-body text-sm focus:outline-none focus:ring-2 focus:ring-offset-0 transition-all" style={{ "--tw-ring-color": "var(--color-forest)" } as React.CSSProperties} />
+          </div>
+        </div>
+        <div>
+          <label className="block font-body font-semibold text-stone-900 text-sm mb-2">Town *</label>
+          <div className="relative">
+            <MapPin size={16} className="absolute left-3 top-3.5 text-stone-400" />
+            <input type="text" name="town" value={formData.town} onChange={handleChange} placeholder="Littleton, MA" className="w-full pl-10 pr-4 py-2.5 border border-stone-200 rounded-lg font-body text-sm focus:outline-none focus:ring-2 focus:ring-offset-0 transition-all" style={{ "--tw-ring-color": "var(--color-forest)" } as React.CSSProperties} />
+          </div>
         </div>
       </div>
       <div className="mb-8">
